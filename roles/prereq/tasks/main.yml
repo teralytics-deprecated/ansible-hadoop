@@ -22,7 +22,12 @@
     service: name=ntpd state=started enabled=true
 
   - name : install latest openjdk-7
-    yum: name=java-1.7.0-openjdk state=present
+    sudo: yes
+    yum: name={{ item }} state=present
+    with_items:
+    - unzip
+    - java-1.7.0-openjdk
+    - java-1.7.0-openjdk-devel
 
   - name : Add JAVA_HOME to user profile
     copy : src=java.sh dest=/etc/profile.d/java.sh 
